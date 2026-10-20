@@ -1,0 +1,36 @@
+pluginManagement {
+    repositories {
+        maven {
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
+        }
+        maven {
+            name = 'PaperMC'
+            url = 'https://repo.papermc.io/repository/maven-public/'
+        }
+        maven {
+            name = 'NeoForged'
+            url = 'https://maven.neoforged.net/releases'
+        }
+        maven {
+            name = 'MinecraftForge'
+            url = 'https://maven.minecraftforge.net/'
+        }
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
+
+rootProject.name = 'MachineCode'
+
+include 'common'
+include 'paper'
+include 'velocity'
+include 'fabric'
+include 'neoforge'
+
+// ForgeGradle configures Minecraft during project configuration. Allow server-only or
+// Fabric-only builds to skip it when Forge's Maven/CDN is unavailable.
+if (!gradle.startParameter.projectProperties.containsKey('skipForge')) {
+    include 'forge'
+}

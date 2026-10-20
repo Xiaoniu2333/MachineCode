@@ -1,0 +1,74 @@
+# ============================================================
+#  MachineCode - Paper/Bukkit backend
+#  Velocity only bridges the "machinecode:main" channel.
+# ============================================================
+
+database:
+  # Relative paths are resolved inside plugins/MachineCode/.
+  # Absolute paths are allowed. A restart is required after changing this.
+  file: "machinecode.db"
+
+enforcement:
+  # true: a player who does not report a machine code within grace-seconds is kicked.
+  # false: reports are still stored and bans still take effect, but a missing mod does not kick.
+  enabled: true
+
+  # The client is never asked to pause the login flow. It sends the report after joining.
+  # Keep this above the worst-case hardware probe time (12 seconds per probe is the hard cap).
+  grace-seconds: 30
+
+  # Available placeholders: %player%, %seconds%
+  timeout-kick-message: |-
+    &c未在 %seconds% 秒内接收到你的机器码。
+    &7请安装并启用 MachineCode 客户端 Mod 后重新连接。
+
+  # Available placeholders: %player%, %machine_code%, %reason%
+  banned-kick-message: |-
+    &c你已被封禁。
+    &7机器码: &f%machine_code%
+    &7原因: &f%reason%
+
+notify-missing-code:
+  # Only used when enforcement.enabled is false.
+  # While the player has not reported a machine code, send `message` every interval-seconds.
+  # The reminder stops as soon as a valid report arrives or the player leaves.
+  enabled: true
+  interval-seconds: 60
+  message: "&e请使用官方客户端进行游玩"
+
+query:
+  # The fifth line is shown only when the player/machine code is banned.
+  # Set this to true if you also want the fifth line ("正常") for unbanned players.
+  show-ban-line-when-not-banned: false
+
+  # The first four lines are always printed. The fifth is conditional (see above).
+  player-line: "&e玩家ID: &f%player%"
+  ip-line: "&e玩家IP: &f%ip%"
+  machine-code-line: "&e机器码: &f%machine_code%"
+  platform-line: "&e系统平台: &f%platform%"
+  ban-line: "&e封禁信息: &f%status%"
+  ban-status-yes: "&c已封禁"
+  ban-status-no: "&a正常"
+  unknown-value: "&7未获取"
+
+lookup:
+  # Reverse lookup prints exactly three lines.
+  machine-code-line: "&e机器码: &f%machine_code%"
+  platform-line: "&e系统平台: &f%platform%"
+  players-line: "&e登录过的游戏ID: &f%players%"
+  no-players: "&7无记录"
+
+messages:
+  prefix: "&8[&bMachineCode&8] &r"
+  no-permission: "&c你没有权限执行此操作。"
+  players-only: "&c该指令只能由玩家执行。"
+  usage: "&e用法: &f/mcode [玩家名] &7| &f/mcode <机器码> &7| &f/mcode ban <机器码> &7| &f/mcode unban <机器码>"
+  player-not-found: "&c未找到玩家 &f%player% &c的记录。"
+  record-not-found: "&c没有找到该机器码的记录: &f%machine_code%"
+  waiting-for-report: "&7等待中"
+  ban-added: "&a已封禁机器码 &f%machine_code% &7(影响 %count% 条记录)。"
+  ban-added-without-record: "&a已封禁机器码 &f%machine_code% &7(当前没有历史记录，新登录将被拦截)。"
+  unban-done: "&a已解除机器码封禁 &f%machine_code% &7(更新 %count% 条记录)。"
+  not-banned: "&e机器码 &f%machine_code% &e当前未被封禁。"
+  reloaded: "&a配置已重新加载。"
+  database-error: "&c数据库操作失败，请查看服务器控制台。"

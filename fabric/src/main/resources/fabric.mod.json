@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "machinecode",
+  "version": "${version}",
+  "name": "MachineCode",
+  "description": "Collects a privacy-preserving hardware fingerprint and reports it to a MachineCode-enabled server after joining.",
+  "authors": [
+    "Xiaoniu2333"
+  ],
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.Xiaoniu2333.mlky.machinecode.fabric.MachineCodeClient"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}

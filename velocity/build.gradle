@@ -1,0 +1,56 @@
+plugins {
+    id 'java'
+}
+
+base {
+    archivesName = "MachineCode-Velocity-${project.version}"
+}
+
+// Velocity 4.2's API artifacts are compiled for Java 25. Use a JDK 25 compiler for this
+// module, but emit Java 21 bytecode so the plugin itself is not tied to a newer class file.
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+
+configurations.compileClasspath {
+    attributes {
+        attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, 25)
+    }
+}
+
+dependencies {
+    compileOnly "com.velocitypowered:velocity-api:${velocity_api_version}"
+    compileOnly 'com.google.inject:guice:7.0.0'
+    implementation project(':common')
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 21
+}
+
+processResources {
+    inputs.property 'version', project.version
+    filesMatching('velocity-plugin.json') {
+        expand version: project.version
+    }
+}
+
+jar {
+    dependsOn ':common:jar'
+    archiveFileName = "MachineCode-Velocity-${project.version}.jar"
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from {
+        configurations.runtimeClasspath.collect { file ->
+            file.isDirectory() ? file : zipTree(file)
+        }
+    }
+    exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA'
+    manifest {
+        attributes(
+                'Implementation-Title': 'MachineCode Velocity',
+                'Implementation-Version': project.version
+        )
+    }
+}

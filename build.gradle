@@ -1,0 +1,43 @@
+plugins {
+    id 'base'
+}
+
+allprojects {
+    group = project.property('group')
+    version = project.property('version')
+
+    repositories {
+        mavenCentral()
+        maven {
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
+        }
+        maven {
+            name = 'PaperMC'
+            url = 'https://repo.papermc.io/repository/maven-public/'
+        }
+    }
+}
+
+subprojects {
+    plugins.withType(JavaPlugin).configureEach {
+        java {
+            toolchain {
+                languageVersion = JavaLanguageVersion.of(21)
+            }
+        }
+
+        tasks.withType(JavaCompile).configureEach {
+            options.encoding = 'UTF-8'
+            options.release = 21
+        }
+
+        tasks.withType(Test).configureEach {
+            useJUnitPlatform()
+            testLogging {
+                events 'failed', 'skipped'
+                exceptionFormat = 'full'
+            }
+        }
+    }
+}

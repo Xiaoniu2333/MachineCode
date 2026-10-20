@@ -1,0 +1,86 @@
+plugins {
+    id 'java'
+}
+
+base {
+    archivesName = "MachineCode-Paper-${project.version}"
+}
+
+repositories {
+    maven {
+        name = 'PlaceholderAPI'
+        url = 'https://repo.extendedclip.com/releases/'
+    }
+}
+
+dependencies {
+    compileOnly "io.papermc.paper:paper-api:${paper_api_version}"
+    compileOnly 'me.clip:placeholderapi:2.11.6'
+    implementation project(':common')
+    implementation "org.xerial:sqlite-jdbc:${sqlite_version}"
+
+    testImplementation platform('org.junit:junit-bom:5.13.4')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+processResources {
+    inputs.property 'version', project.version
+    filesMatching('plugin.yml') {
+        expand version: project.version
+    }
+}
+
+jar {
+    dependsOn ':common:jar'
+    archiveFileName = "MachineCode-Paper-${project.version}.jar"
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from {
+        configurations.runtimeClasspath.collect { file ->
+            file.isDirectory() ? file : zipTree(file)
+        }
+    }
+    exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA'
+    manifest {
+        attributes(
+                'Implementation-Title': 'MachineCode Paper',
+                'Implementation-Version': project.version
+        )
+    }
+}
+
+/**
+ * Thin variant: plugin code + the project's own common module, but no third-party
+ * dependencies. Paper 1.21.11 already ships org.xerial:sqlite-jdbc (3.49.1.0) in its
+ * libraries folder, so this jar is the one to use when the server provides the driver.
+ */
+tasks.register('thinJar', Jar) {
+    dependsOn ':common:classes', classes
+    group = 'build'
+    description = 'Paper plugin without bundled SQLite/driver dependencies'
+    archiveFileName = "MachineCode-Paper-${project.version}-thin.jar"
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    from sourceSets.main.output
+    from project(':common').sourceSets.main.output
+
+    exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA'
+    exclude 'org/sqlite/**'
+
+    manifest {
+        attributes(
+                'Implementation-Title': 'MachineCode Paper (thin)',
+                'Implementation-Version': project.version,
+                'MachineCode-Variant': 'thin'
+        )
+    }
+}
+
+tasks.named('assemble') {
+    dependsOn tasks.named('thinJar')
+}
+
+tasks.named('test') {
+    // Paper API is only needed at compile time; repository tests use SQLite directly.
+    useJUnitPlatform()
+}

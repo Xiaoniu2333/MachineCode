@@ -1,0 +1,28 @@
+modLoader = "javafml"
+loaderVersion = "[61,)"
+license = "MIT"
+clientSideOnly = true
+
+[[mods]]
+modId = "machinecode"
+version = "${version}"
+displayName = "MachineCode"
+authors = "Xiaoniu2333"
+displayTest = "IGNORE_ALL_VERSION"
+description = '''
+Client-side machine code collector for MachineCode-enabled Velocity/Paper servers.
+It reports a SHA-256 hardware fingerprint after joining; it never sends the raw BIOS serial.'''
+
+[[dependencies.machinecode]]
+modId = "forge"
+mandatory = true
+versionRange = "[61,)"
+ordering = "NONE"
+side = "CLIENT"
+
+[[dependencies.machinecode]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.21.11,1.22)"
+ordering = "NONE"
+side = "CLIENT"

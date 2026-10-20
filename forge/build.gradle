@@ -1,0 +1,54 @@
+plugins {
+    id 'java'
+    id 'net.minecraftforge.gradle' version '[7.0.3,8)'
+}
+
+base {
+    archivesName = "MachineCode-Forge-${project.version}"
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir '../common/src/main/java'
+        }
+    }
+}
+
+minecraft {
+    mappings channel: 'official', version: '1.21.11'
+
+    runs {
+        client {
+            workingDir = layout.projectDirectory.dir('run')
+        }
+    }
+}
+
+repositories {
+    minecraft.mavenizer(it)
+    maven fg.forgeMaven
+    maven fg.minecraftLibsMaven
+    mavenCentral()
+}
+
+dependencies {
+    implementation minecraft.dependency('net.minecraftforge:forge:1.21.11-61.2.4')
+}
+
+processResources {
+    inputs.property 'version', project.version
+    filesMatching('META-INF/mods.toml') {
+        expand version: project.version
+    }
+}
+
+tasks.named('jar') {
+    archiveFileName = "MachineCode-Forge-${project.version}.jar"
+}

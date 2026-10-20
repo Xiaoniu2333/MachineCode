@@ -1,0 +1,8 @@
+{
+  "id": "machinecode",
+  "name": "MachineCode",
+  "version": "${version}",
+  "description": "Velocity channel bridge for the MachineCode Paper plugin",
+  "authors": ["Xiaoniu2333"],
+  "main": "com.Xiaoniu2333.mlky.machinecode.velocity.MachineCodeVelocityPlugin"
+}

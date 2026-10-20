@@ -1,0 +1,37 @@
+name: MachineCode
+version: '${version}'
+main: com.Xiaoniu2333.mlky.machinecode.paper.MachineCodePlugin
+api-version: '1.21'
+description: Machine-code collection, lookup and ban system for Velocity-backed Paper servers.
+authors: [Xiaoniu2333]
+website: https://github.com/Xiaoniu2333/MachineCode
+softdepend: [PlaceholderAPI]
+
+commands:
+  machinecode:
+    description: Query a player or machine code, or manage machine-code bans.
+    aliases: [mcode]
+    usage: /mcode [player] | /mcode <machineCode> | /mcode ban <machineCode>
+    permission-message: You do not have permission to use MachineCode.
+
+permissions:
+  machinecode.query:
+    description: Query a player's current machine code.
+    default: op
+  machinecode.lookup:
+    description: Reverse-lookup all players that used a machine code.
+    default: op
+  machinecode.ban:
+    description: Ban or unban a machine code.
+    default: op
+  machinecode.reload:
+    description: Reload the MachineCode configuration.
+    default: op
+  machinecode.admin:
+    description: Grants all MachineCode permissions.
+    default: op
+    children:
+      machinecode.query: true
+      machinecode.lookup: true
+      machinecode.ban: true
+      machinecode.reload: true

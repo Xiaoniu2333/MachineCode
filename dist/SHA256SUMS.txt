@@ -1,0 +1,6 @@
+c6a39e4ea094c1093503838b731ef4e229e0234a7b0bf0d0c3c5d29dd3b9e2a2  MachineCode-Fabric-1.0.0.jar
+0a93a60736f0e7bbfefa4474144be782b46ba5abbfb138c08536dbcac65daed8  MachineCode-Forge-1.0.0.jar
+a7149ec90b2a9d18abe249c93a2bf6f0f812b522467d2d0da0e903177bd5f9cf  MachineCode-NeoForge-1.0.0.jar
+f4fe7336102776828f9ea2f699052f2fb28f73d1bcdfdbd7ec6e7d05e5a90c99  MachineCode-Paper-1.0.0-thin.jar
+96a3148738f84e7fd3ae25f00c440ef5443bd327ef7e3ae87c15ac01962e9ec0  MachineCode-Paper-1.0.0.jar
+cf2dbb5268d0a423f32c1607cbbe5a5ff0ff0b3302044fb5210490f2dedcf6f6  MachineCode-Velocity-1.0.0.jar

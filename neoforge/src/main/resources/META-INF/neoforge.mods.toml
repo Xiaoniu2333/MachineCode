@@ -1,0 +1,26 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+license = "MIT"
+
+[[mods]]
+modId = "machinecode"
+version = "${version}"
+displayName = "MachineCode"
+authors = "Xiaoniu2333"
+description = '''
+Client-side machine code collector for MachineCode-enabled Velocity/Paper servers.
+It reports a SHA-256 hardware fingerprint after joining; it never sends the raw BIOS serial.'''
+
+[[dependencies.machinecode]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.11.0,)"
+ordering = "NONE"
+side = "CLIENT"
+
+[[dependencies.machinecode]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21.11,1.22)"
+ordering = "NONE"
+side = "CLIENT"

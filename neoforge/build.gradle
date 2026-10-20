@@ -1,0 +1,48 @@
+plugins {
+    id 'java'
+    id 'net.neoforged.moddev' version '2.0.148'
+}
+
+base {
+    archivesName = "MachineCode-NeoForge-${project.version}"
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir '../common/src/main/java'
+        }
+    }
+}
+
+neoForge {
+    version = '21.11.48'
+
+    runs {
+        client {
+            client()
+        }
+        clientE2E {
+            client()
+            programArguments.addAll('--server', '127.0.0.1', '--port', '25565')
+            disableIdeRun()
+        }
+    }
+
+    mods {
+        machinecode {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+processResources {
+    inputs.property 'version', project.version
+    filesMatching('META-INF/neoforge.mods.toml') {
+        expand version: project.version
+    }
+}
+
+tasks.named('jar') {
+    archiveFileName = "MachineCode-NeoForge-${project.version}.jar"
+}
