@@ -1,5 +1,8 @@
 # MachineCode
 
+---
+声明：本插件由AI（DeepSeek）开发
+---
 MachineCode 是一套 Minecraft 客户端机器码采集 + Velocity 通道桥接 + Paper 后端查询/封禁系统。
 
 - 客户端：Fabric（Loader 0.19.5）、NeoForge 21.11.48、Forge 61.2.4
